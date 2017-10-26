@@ -126,26 +126,36 @@ while True:
             cv2.destroyAllWindows()
             cap.release()
 
-## Save data
-#with open(file_path+'mid.pickle', 'w') as f:  # Python 3: open(..., 'wb')
-#    pickle.dump({'frametracker': frametracker,
-#                 'corners':corners,
-#                 'frameNumber':frameNumber,
-#                 'file_path': file_path,
-#                 'frame_title': frame_title,
-#                 }, f)
-#
+# Save data
+with open(file_path+'mid.pickle', 'w') as f:  # Python 3: open(..., 'wb')
+    pickle.dump({'frametracker': frametracker,
+                 'corners':corners,
+                 'frameNumber':frameNumber,
+                 'file_path': file_path,
+                 'frame_title': frame_title,
+                 }, f)
+
 ## Load data
-#with open(file_path+'.pickle') as f:  # Python 3: open(..., 'rb')
-#    alldata = pickle.load(f)
-#    a = alldata['frametracker']
+#with open(file_pathR+'right.pickle') as f:  # Python 3: open(..., 'rb')
+#    alldataR = pickle.load(f)
+#    aR = alldataR['frametracker']
+#    #pad with nans/zeros to align frames (frameNumber - len(a))
+#    
+#with open(file_pathM+'mid.pickle') as f:  # Python 3: open(..., 'rb')
+#    alldataM = pickle.load(f)
+#    aM = alldataM['frametracker']
 #    #pad with nans/zeros to align frames (frameNumber - len(a))
 #    
 ## Check data
 #from matplotlib import pyplot as plt
+#import numpy as np
 #
-#plt.plot(frametracker)
-#plt.ylim([-1,2])
-
+#aRshift = np.array(aR)+1
+#
+#plt.plot(aRshift, 'b')
+#plt.plot(aM, 'r')
+#plt.ylim([-2,4])
+#plt.title('tracked in right and middle chambers')
+#plt.legend({'R', 'M'})
 
 

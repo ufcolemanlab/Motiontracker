@@ -6,6 +6,8 @@ import pickle
 import os
 from progress.bar import Bar
 
+debug = 1
+
 frameNumber = 0
 roiPoints = []
 global corners
@@ -98,9 +100,9 @@ for a in range(length):
 	text = "Unoccupied"
 	text2 = "Unoccupied"
 
-#    if debug == 1:
+	if debug == 1:
 
-	key = cv2.waitKey(25) & 0xFF
+        	key = cv2.waitKey(25) & 0xFF
 
 	roi = frame[corners[0][1]:corners[1][1], corners[0][0]:corners[1][0]]
 	roi2 = frame[corners[2][1]:corners[3][1], corners[2][0]:corners[3][0]]
@@ -150,38 +152,50 @@ for a in range(length):
 
 	if text2 == 'Occupied':
            frametracker2.append( 1 )
-           txtcolor2 = (0,255,0)
+           txtcolor2 = (255,0,0)
 	elif text2 == 'Unoccupied':
            txtcolor2 = (0,0,255)
            frametracker2.append( 0 )
 
 	bar.next()
 
-#   if debug == 1:
-	cv2.rectangle(frame, corners[0], corners[1], (0, 255, 0), 2)
-	cv2.rectangle(frame, corners[2], corners[3], (255, 0, 0), 2)
-
-	# draw the text and timestamp on the frame
-	cv2.putText(frame, "Chamber Status 1: {}".format(text), (10, 20),
-		cv2.FONT_HERSHEY_SIMPLEX, 0.5, (txtcolor), 2)
-
-	cv2.putText(frame, "Chamber Status 2: {}".format(text2), (10, 40),
-		cv2.FONT_HERSHEY_SIMPLEX, 0.5, (txtcolor2), 2)
-	
-	cv2.imshow("Thresh", thresh)
-	cv2.imshow("Frame Delta", frameDelta)
-
-	cv2.imshow("Thresh2", thresh2)
-	cv2.imshow("Frame Delta2", frameDelta2)
-	cv2.imshow(frame_title,frame)
-
-	
-	if key == ord('q') or key == 27:
-		cv2.destroyAllWindows()
-		cap.release()
+	if debug == 1:
+     
+        	cv2.rectangle(frame, corners[0], corners[1], (0, 255, 0), 2)
+        	cv2.rectangle(frame, corners[2], corners[3], (255, 0, 0), 2)
+        
+        	# draw the text and timestamp on the frame
+        	cv2.putText(frame, "Chamber Status 1: {}".format(text), (10, 20),
+        		cv2.FONT_HERSHEY_SIMPLEX, 0.5, (txtcolor), 2)
+        
+        	cv2.putText(frame, "Chamber Status 2: {}".format(text2), (10, 40),
+        		cv2.FONT_HERSHEY_SIMPLEX, 0.5, (txtcolor2), 2)
+        	
+        	cv2.imshow("Thresh", thresh)
+        	cv2.imshow("Frame Delta", frameDelta)
+        
+        	cv2.imshow("Thresh2", thresh2)
+        	cv2.imshow("Frame Delta2", frameDelta2)
+        	cv2.imshow(frame_title,frame)
+        
+        	
+        	if key == ord('q') or key == 27:
+        		cv2.destroyAllWindows()
+        		cap.release()
 
 bar.finish()
 print len(frametracker)
 print len(frametracker2)
+
+with open(file_path+'DATA.pickle', 'w') as f:  # Python 3: open(..., 'wb')
+    pickle.dump({'frametracker': frametracker,
+                 'frametracker2': frametracker2,
+                 'corners':corners,
+                 'frameNumber':frameNumber,
+                 'file_path': file_path,
+                 'frame_title': frame_title,
+                 }, f)
+
 print 'Done'
+print 'Data saved to: ' + file_path+'DATA.pickle'
 

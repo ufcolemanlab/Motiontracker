@@ -6,7 +6,7 @@ import pickle
 import os
 from progress.bar import Bar
 
-debug = 1
+debug = 0
 thresh_lo = 50
 thresh_lo2 = 50
 

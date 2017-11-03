@@ -15,11 +15,8 @@ roiPoints = []
 global corners
 corners = []
 frametracker = []
-<<<<<<< HEAD
-=======
 frametracker2 = []
 frametracker3 = []
->>>>>>> origin/master
 
 root = tk.Tk()
 root.withdraw()

@@ -98,6 +98,8 @@ for a in range(length):
 	text = "Unoccupied"
 	text2 = "Unoccupied"
 
+#    if debug == 1:
+
 	key = cv2.waitKey(25) & 0xFF
 
 	roi = frame[corners[0][1]:corners[1][1], corners[0][0]:corners[1][0]]
@@ -155,6 +157,7 @@ for a in range(length):
 
 	bar.next()
 
+#   if debug == 1:
 	cv2.rectangle(frame, corners[0], corners[1], (0, 255, 0), 2)
 	cv2.rectangle(frame, corners[2], corners[3], (255, 0, 0), 2)
 

@@ -16,6 +16,7 @@ global corners
 corners = []
 frametracker = []
 frametracker2 = []
+frametracker3 = []
 
 root = tk.Tk()
 root.withdraw()
@@ -101,6 +102,7 @@ for a in range(length):
 	ret,frame = cap.read()
 	text = "Unoccupied"
 	text2 = "Unoccupied"
+	text3 = "Unoccupied" 
 
 	if debug == 1:
 
@@ -144,20 +146,31 @@ for a in range(length):
 		# compute the bounding box for the contour, draw it on the frame,
 		# and update the text
 		text2 = "Occupied"
+  
 
 	if text == 'Occupied':
            frametracker.append( 1 )
            txtcolor = (0,255,0)
 	elif text == 'Unoccupied':
-           txtcolor = (0,0,255)
+           txtcolor = (255,255,255)
            frametracker.append( 0 )
 
 	if text2 == 'Occupied':
            frametracker2.append( 1 )
-           txtcolor2 = (0,255,0)
-	elif text2 == 'Unoccupied':
            txtcolor2 = (255,0,0)
+	elif text2 == 'Unoccupied':
+           txtcolor2 = (255,255,255)
            frametracker2.append( 0 )
+           
+	if text == 'Unoccupied' and text2 == 'Unoccupied':
+           frametracker3.append( 1 )
+           txtcolor3 = (0,0,255)
+           text3 = 'Occupied'
+	elif text == 'Occupied' or text2 == 'Occupied':
+           txtcolor3 = (255,255,255)
+           text3 = 'Unoccupied'
+           frametracker3.append( 0 )           
+    
 
 	bar.next()
 
@@ -173,6 +186,9 @@ for a in range(length):
         	cv2.putText(frame, "Chamber Status 2: {}".format(text2), (10, 40),
         		cv2.FONT_HERSHEY_SIMPLEX, 0.5, (txtcolor2), 2)
         	
+        	cv2.putText(frame, "Chamber Status 3: {}".format(text3), (10, 60),
+        		cv2.FONT_HERSHEY_SIMPLEX, 0.5, (txtcolor3), 2)         
+         
         	cv2.imshow("Thresh", thresh)
         	cv2.imshow("Frame Delta", frameDelta)
         
@@ -192,6 +208,7 @@ print len(frametracker2)
 with open(file_path+'DATA.pickle', 'w') as f:  # Python 3: open(..., 'wb')
     pickle.dump({'frametracker': frametracker,
                  'frametracker2': frametracker2,
+                 'frametracker3': frametracker3,
                  'corners':corners,
                  'frameNumber':frameNumber,
                  'file_path': file_path,

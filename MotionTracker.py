@@ -140,14 +140,18 @@ for a in range(length):
 		text2 = "Occupied"
 
 	if text == 'Occupied':
-		frametracker.append( 1 )
+           frametracker.append( 1 )
+           txtcolor = (0,255,0)
 	elif text == 'Unoccupied':
-		frametracker.append( 0 )
+           txtcolor = (0,0,255)
+           frametracker.append( 0 )
 
 	if text2 == 'Occupied':
-		frametracker2.append( 1 )
+           frametracker2.append( 1 )
+           txtcolor2 = (0,255,0)
 	elif text2 == 'Unoccupied':
-		frametracker2.append( 0 )
+           txtcolor2 = (0,0,255)
+           frametracker2.append( 0 )
 
 	bar.next()
 
@@ -156,10 +160,10 @@ for a in range(length):
 
 	# draw the text and timestamp on the frame
 	cv2.putText(frame, "Chamber Status 1: {}".format(text), (10, 20),
-		cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
+		cv2.FONT_HERSHEY_SIMPLEX, 0.5, (txtcolor), 2)
 
 	cv2.putText(frame, "Chamber Status 2: {}".format(text2), (10, 40),
-		cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
+		cv2.FONT_HERSHEY_SIMPLEX, 0.5, (txtcolor2), 2)
 	
 	cv2.imshow("Thresh", thresh)
 	cv2.imshow("Frame Delta", frameDelta)

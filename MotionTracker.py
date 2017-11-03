@@ -7,6 +7,8 @@ import os
 from progress.bar import Bar
 
 debug = 1
+thresh_lo = 50
+thresh_lo2 = 50
 
 frameNumber = 0
 roiPoints = []
@@ -114,13 +116,13 @@ for a in range(length):
 	gray2 = cv2.GaussianBlur(gray2, (21, 21), 0)
 
 	frameDelta = cv2.absdiff(refFrame, gray)
-	thresh = cv2.threshold(frameDelta, 10, 255, cv2.THRESH_BINARY)[1]
+	thresh = cv2.threshold(frameDelta, thresh_lo, 255, cv2.THRESH_BINARY)[1]
 
 	thresh = cv2.dilate(thresh, None, iterations=1)
 	(_, cnts, _) = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
 
 	frameDelta2 = cv2.absdiff(refFrame2, gray2)
-	thresh2 = cv2.threshold(frameDelta2, 10, 255, cv2.THRESH_BINARY)[1]
+	thresh2 = cv2.threshold(frameDelta2, thresh_lo2, 255, cv2.THRESH_BINARY)[1]
 
 	thresh2 = cv2.dilate(thresh2, None, iterations=1)
 	(_, cnts2, _) = cv2.findContours(thresh2.copy(), cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
@@ -152,9 +154,9 @@ for a in range(length):
 
 	if text2 == 'Occupied':
            frametracker2.append( 1 )
-           txtcolor2 = (255,0,0)
+           txtcolor2 = (0,255,0)
 	elif text2 == 'Unoccupied':
-           txtcolor2 = (0,0,255)
+           txtcolor2 = (255,0,0)
            frametracker2.append( 0 )
 
 	bar.next()

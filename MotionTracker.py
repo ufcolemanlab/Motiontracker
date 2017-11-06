@@ -206,8 +206,6 @@ for a in range(length):
         		cap.release()
 
 bar.finish()
-print 'Number of frames (green): ' + str(len(frametracker))
-print 'Number of frames (blue): ' + str(len(frametracker2))
 
 with open(file_path+'DATA.pickle', 'w') as f:  # Python 3: open(..., 'wb')
     pickle.dump({'frametracker': frametracker,
@@ -218,6 +216,9 @@ with open(file_path+'DATA.pickle', 'w') as f:  # Python 3: open(..., 'wb')
                  'file_path': file_path,
                  'frame_title': frame_title,
                  }, f)
+
+print 'Number of frames (green): ' + str(len(frametracker))
+print 'Number of frames (blue): ' + str(len(frametracker2))
 
 print 'Done'
 print 'Data saved to: ' + file_path+'DATA.pickle'

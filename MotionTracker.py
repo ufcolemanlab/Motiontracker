@@ -187,7 +187,9 @@ for a in range(length):
         		cv2.FONT_HERSHEY_SIMPLEX, 0.5, (txtcolor2), 2)
         	
         	cv2.putText(frame, "Chamber Status 3: {}".format(text3), (10, 60),
-        		cv2.FONT_HERSHEY_SIMPLEX, 0.5, (txtcolor3), 2)         
+        		cv2.FONT_HERSHEY_SIMPLEX, 0.5, (txtcolor3), 2)
+          
+        	cv2.imshow(frame_title,frame)
          
         	cv2.imshow("Thresh", thresh)
         	frameDelta_map = cv2.applyColorMap(frameDelta, cv2.COLORMAP_JET)

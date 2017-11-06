@@ -6,9 +6,9 @@ import pickle
 import os
 from progress.bar import Bar
 
-debug = 0
+debug = 1
 thresh_lo = 50
-thresh_lo2 = 50
+thresh_lo2 = 10 #day1 vids = 10 for mid
 
 frameNumber = 0
 roiPoints = []
@@ -106,7 +106,7 @@ for a in range(length):
 
 	if debug == 1:
 
-        	key = cv2.waitKey(25) & 0xFF
+		key = cv2.waitKey(25) & 0xFF
 
 	roi = frame[corners[0][1]:corners[1][1], corners[0][0]:corners[1][0]]
 	roi2 = frame[corners[2][1]:corners[3][1], corners[2][0]:corners[3][0]]
@@ -190,11 +190,13 @@ for a in range(length):
         		cv2.FONT_HERSHEY_SIMPLEX, 0.5, (txtcolor3), 2)         
          
         	cv2.imshow("Thresh", thresh)
-        	cv2.imshow("Frame Delta", frameDelta)
+        	frameDelta_map = cv2.applyColorMap(frameDelta, cv2.COLORMAP_JET)
+        	cv2.imshow("Frame Delta", frameDelta_map)
+
         
         	cv2.imshow("Thresh2", thresh2)
-        	cv2.imshow("Frame Delta2", frameDelta2)
-        	cv2.imshow(frame_title,frame)
+        	frameDelta_map2 = cv2.applyColorMap(frameDelta2, cv2.COLORMAP_JET)
+        	cv2.imshow("Frame Delta2", frameDelta_map2)
         
         	
         	if key == ord('q') or key == 27:
@@ -202,8 +204,8 @@ for a in range(length):
         		cap.release()
 
 bar.finish()
-print len(frametracker)
-print len(frametracker2)
+print 'Number of frames (green): ' + len(frametracker)
+print 'Number of frames (blue): ' + len(frametracker2)
 
 with open(file_path+'DATA.pickle', 'w') as f:  # Python 3: open(..., 'wb')
     pickle.dump({'frametracker': frametracker,
